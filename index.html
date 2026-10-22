@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>송수정 | 청년 창업가</title>
+  <style>
+    /* 기본 리셋 및 폰트 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", "Noto Sans KR", "Malgun Gothic", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: #fafbfc;
+      color: #2d3748;
+      line-height: 1.6;
+      word-break: keep-all;
+      overflow-x: hidden;
+    }
+
+    /* 1. 상단 스크롤 진행 게이지바 */
+    #scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 4px;
+      width: 0%;
+      background: linear-gradient(90deg, #3b82f6, #ec4899, #f59e0b);
+      z-index: 999;
+      transition: width 0.1s ease-out;
+    }
+
+    /* 상단 내비게이션 바 (헤더) */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.85);
+      transition: all 0.3s ease;
+    }
+
+    .nav-container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-logo {
+      font-size: 19px;
+      font-weight: 700;
+      color: #1e293b;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: transform 0.2s ease;
+    }
+
+    .nav-logo:hover {
+      transform: scale(1.02);
+    }
+
+    .nav-logo-thumb {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      object-fit: cover;
+      border: 1.5px solid #3b82f6;
+    }
+
+    .nav-logo span {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #2563eb;
+      background: #eff6ff;
+      padding: 3px 9px;
+      border-radius: 6px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      color: #64748b;
+      transition: color 0.2s ease, transform 0.2s ease;
+      display: inline-block;
+    }
+
+    .nav-links a:hover {
+      color: #2563eb;
+      transform: translateY(-1px);
+    }
+
+    /* 메인 히어로 섹션 */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 85px 24px 75px;
+      background: linear-gradient(135deg, #fef2f2 0%, #fff7ed 35%, #eff6ff 70%, #faf5ff 100%);
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .hero-container {
+      max-width: 940px;
+      margin: 0 auto;
+    }
+
+    .hero-grid {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 52px;
+      text-align: left;
+    }
+
+    /* 2. 큼직한 사각형 프로필 이미지 박스 (3D 틸트 인터랙션) */
+    .hero-image-box {
+      position: relative;
+      flex-shrink: 0;
+      width: 330px;
+      height: 330px;
+      perspective: 1000px;
+      cursor: pointer;
+    }
+
+    .hero-profile-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 28px;
+      box-shadow: 0 20px 45px -10px rgba(37, 99, 235, 0.24),
+                  0 0 1px 1px rgba(255, 255, 255, 0.9);
+      border: 4px solid #ffffff;
+      display: block;
+      transition: transform 0.15s ease-out, box-shadow 0.3s ease;
+      will-change: transform;
+    }
+
+    .hero-image-box:hover .hero-profile-img {
+      box-shadow: 0 28px 55px -10px rgba(37, 99, 235, 0.35);
+    }
+
+    .hero-image-badge {
+      position: absolute;
+      bottom: -12px;
+      right: 14px;
+      background: #ffffff;
+      padding: 7px 16px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #2563eb;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+      border: 1px solid #e0e7ff;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      pointer-events: none;
+      transition: transform 0.3s ease;
+    }
+
+    .hero-image-box:hover .hero-image-badge {
+      transform: translateY(-2px) scale(1.05);
+    }
+
+    /* 텍스트 영역 */
+    .hero-text-box {
+      flex: 1;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 15px;
+      background: #ffffff;
+      color: #2563eb;
+      border: 1px solid #dbeafe;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 18px;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
+      animation: floatBadge 3s ease-in-out infinite;
+    }
+
+    @keyframes floatBadge {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-3px); }
+    }
+
+    .hero-title {
+      font-size: 34px;
+      font-weight: 800;
+      line-height: 1.35;
+      color: #0f172a;
+      letter-spacing: -0.8px;
+      margin-bottom: 18px;
+    }
+
+    .hero-title .highlight {
+      background: linear-gradient(120deg, #2563eb, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-desc {
+      font-size: 16px;
+      line-height: 1.75;
+      color: #475569;
+      margin-bottom: 26px;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      gap: 8px;
+    }
+
+    .hero-tag {
+      padding: 6px 14px;
+      background: rgba(255, 255, 255, 0.95);
+      color: #334155;
+      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+      transition: all 0.2s ease;
+      cursor: default;
+    }
+
+    .hero-tag:hover {
+      border-color: #3b82f6;
+      color: #2563eb;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.12);
+    }
+
+    /* 3. 스크롤 시 부드럽게 떠오르는 리빌 애니메이션 */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* 본문 섹션 공통 스타일 */
+    .section {
+      padding: 85px 24px;
+      max-width: 880px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      margin-bottom: 44px;
+      text-align: center;
+    }
+
+    .section-subtitle {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.6px;
+      color: #3b82f6;
+      margin-bottom: 8px;
+    }
+
+    .section-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: #1e293b;
+      letter-spacing: -0.5px;
+    }
+
+    /* 창업 비전 & 철학 섹션 */
+    .vision-box {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 24px;
+      padding: 44px 36px;
+      box-shadow: 0 8px 30px rgba(148, 163, 184, 0.06);
+    }
+
+    .vision-main-quote {
+      font-size: 20px;
+      font-weight: 700;
+      color: #1e293b;
+      line-height: 1.55;
+      text-align: center;
+      margin-bottom: 36px;
+      letter-spacing: -0.4px;
+    }
+
+    .vision-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .vision-card {
+      background: #f8fafc;
+      border-radius: 16px;
+      padding: 24px 20px;
+      border: 1px solid #edf2f7;
+      transition: transform 0.25s ease, background-color 0.25s ease, border-color 0.25s ease;
+    }
+
+    .vision-card:hover {
+      background: #ffffff;
+      border-color: #cbd5e1;
+      transform: translateY(-4px);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.05);
+    }
+
+    .vision-card .num {
+      font-size: 13px;
+      font-weight: 700;
+      color: #3b82f6;
+      margin-bottom: 8px;
+    }
+
+    .vision-card h4 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 6px;
+    }
+
+    .vision-card p {
+      font-size: 13.5px;
+      color: #64748b;
+      line-height: 1.6;
+    }
+
+    /* 핵심 강점 (인터랙티브 호버 카드) */
+    .strengths-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 24px;
+    }
+
+    .strength-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      padding: 32px 24px;
+      box-shadow: 0 8px 24px rgba(148, 163, 184, 0.08);
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+      cursor: default;
+    }
+
+    .strength-card:hover {
+      transform: translateY(-6px) scale(1.02);
+      box-shadow: 0 18px 36px rgba(148, 163, 184, 0.18);
+    }
+
+    .strength-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 18px;
+      font-size: 23px;
+      transition: transform 0.3s ease;
+    }
+
+    .strength-card:hover .strength-icon {
+      transform: rotate(8deg) scale(1.1);
+    }
+
+    .icon-blue { background: #eff6ff; color: #2563eb; }
+    .icon-coral { background: #fff1f2; color: #f43f5e; }
+    .icon-amber { background: #fef3c7; color: #d97706; }
+
+    .strength-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 10px;
+    }
+
+    .strength-card p {
+      font-size: 14.5px;
+      color: #64748b;
+      line-height: 1.65;
+    }
+
+    /* 활동 및 이력 타임라인 */
+    .timeline {
+      position: relative;
+      max-width: 720px;
+      margin: 0 auto;
+      padding-left: 32px;
+      border-left: 2px solid #e2e8f0;
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 44px;
+      transition: transform 0.25s ease;
+    }
+
+    .timeline-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .timeline-item:hover {
+      transform: translateX(4px);
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: -39px;
+      top: 4px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #3b82f6;
+      border: 3px solid #ffffff;
+      box-shadow: 0 0 0 2px #bfdbfe;
+      transition: all 0.3s ease;
+    }
+
+    .timeline-item:hover::before {
+      background: #ec4899;
+      box-shadow: 0 0 0 4px #fbcfe8;
+      transform: scale(1.2);
+    }
+
+    .timeline-period {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #2563eb;
+      margin-bottom: 4px;
+    }
+
+    .timeline-title {
+      font-size: 19px;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 8px;
+    }
+
+    .timeline-desc {
+      font-size: 14.5px;
+      color: #475569;
+      line-height: 1.65;
+      margin-bottom: 12px;
+    }
+
+    .timeline-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .badge-chip {
+      font-size: 12px;
+      font-weight: 600;
+      color: #3b82f6;
+      background: #eff6ff;
+      border: 1px solid #dbeafe;
+      padding: 3px 10px;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .badge-chip:hover {
+      background: #2563eb;
+      color: #ffffff;
+    }
+
+    /* 4. 미니 인터뷰 Q&A (클릭해서 여닫는 아코디언 인터랙션) */
+    .interview-list {
+      max-width: 740px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .interview-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 18px;
+      padding: 22px 26px;
+      box-shadow: 0 4px 16px rgba(148, 163, 184, 0.06);
+      cursor: pointer;
+      transition: all 0.25s ease;
+      user-select: none;
+    }
+
+    .interview-card:hover {
+      border-color: #cbd5e1;
+      box-shadow: 0 6px 20px rgba(148, 163, 184, 0.12);
+    }
+
+    .interview-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .interview-q {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 16.5px;
+      font-weight: 700;
+      color: #1e293b;
+    }
+
+    .interview-q .badge-q {
+      background: #2563eb;
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+
+    .interview-arrow {
+      font-size: 16px;
+      color: #94a3b8;
+      transition: transform 0.3s ease;
+      flex-shrink: 0;
+    }
+
+    .interview-card.open .interview-arrow {
+      transform: rotate(180deg);
+      color: #2563eb;
+    }
+
+    .interview-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s cubic-bezier(0, 1, 0, 1), opacity 0.3s ease;
+      opacity: 0;
+    }
+
+    .interview-card.open .interview-body {
+      max-height: 300px;
+      opacity: 1;
+      transition: max-height 0.4s ease-in-out, opacity 0.35s ease;
+    }
+
+    .interview-a {
+      font-size: 14.5px;
+      color: #475569;
+      line-height: 1.7;
+      padding-top: 16px;
+      border-top: 1px solid #f1f5f9;
+      margin-top: 14px;
+    }
+
+    /* 5. 응원하기 인터랙티브 버튼 (하트 폭죽 파티클) */
+    .cheer-section {
+      text-align: center;
+      margin: 40px auto 0 auto;
+      max-width: 600px;
+    }
+
+    .cheer-btn {
+      position: relative;
+      background: linear-gradient(135deg, #ff6b8b, #ff8e53);
+      color: #ffffff;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 999px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(255, 107, 139, 0.35);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      outline: none;
+    }
+
+    .cheer-btn:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 12px 28px rgba(255, 107, 139, 0.45);
+    }
+
+    .cheer-btn:active {
+      transform: scale(0.96);
+    }
+
+    .cheer-counter {
+      display: inline-block;
+      margin-left: 8px;
+      background: rgba(255, 255, 255, 0.3);
+      padding: 2px 10px;
+      border-radius: 999px;
+      font-size: 14px;
+    }
+
+    /* 하트 파티클 요소 */
+    .floating-heart {
+      position: absolute;
+      pointer-events: none;
+      font-size: 22px;
+      animation: floatUpAndFade 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+      z-index: 1000;
+    }
+
+    @keyframes floatUpAndFade {
+      0% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(var(--dx), -90px) scale(1.5) rotate(var(--rot));
+      }
+    }
+
+    /* 6. 네트워킹 & 이메일 복사 인터랙션 */
+    .contact-box {
+      background: linear-gradient(135deg, #eff6ff 0%, #f5f3ff 100%);
+      border: 1px solid #dbeafe;
+      border-radius: 24px;
+      padding: 48px 32px;
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto;
+      box-shadow: 0 10px 25px rgba(37, 99, 235, 0.05);
+    }
+
+    .contact-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 12px;
+    }
+
+    .contact-desc {
+      font-size: 15px;
+      color: #64748b;
+      max-width: 500px;
+      margin: 0 auto 28px auto;
+      line-height: 1.65;
+    }
+
+    .contact-email-card {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #ffffff;
+      padding: 13px 26px;
+      border-radius: 999px;
+      border: 1px solid #cbd5e1;
+      font-size: 15px;
+      font-weight: 600;
+      color: #1e293b;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .contact-email-card:hover {
+      border-color: #2563eb;
+      color: #2563eb;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(37, 99, 235, 0.15);
+    }
+
+    .contact-email-card .copy-badge {
+      font-size: 11.5px;
+      background: #eff6ff;
+      color: #2563eb;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-weight: 700;
+    }
+
+    /* 토스트 알림 메시지 */
+    #toast-msg {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: #1e293b;
+      color: #ffffff;
+      padding: 12px 24px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 600;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 1000;
+    }
+
+    #toast-msg.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* 7. 맨 위로 가기 플로팅 버튼 */
+    #back-to-top {
+      position: fixed;
+      bottom: 26px;
+      right: 26px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      color: #3b82f6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+      cursor: pointer;
+      font-size: 20px;
+      font-weight: 700;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      z-index: 90;
+    }
+
+    #back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    #back-to-top:hover {
+      background: #3b82f6;
+      color: #ffffff;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 22px rgba(59, 130, 246, 0.3);
+    }
+
+    /* 푸터 */
+    footer {
+      background: #ffffff;
+      border-top: 1px solid #e2e8f0;
+      padding: 38px 24px;
+      text-align: center;
+      color: #94a3b8;
+      font-size: 13.5px;
+    }
+
+    /* 모바일 & 태블릿 반응형 대응 */
+    @media (max-width: 820px) {
+      .hero {
+        padding: 55px 20px 50px;
+      }
+      .hero-grid {
+        flex-direction: column;
+        text-align: center;
+        gap: 32px;
+      }
+      .hero-image-box {
+        width: 270px;
+        height: 270px;
+      }
+      .hero-text-box .hero-title {
+        font-size: 27px;
+      }
+      .hero-text-box .hero-desc {
+        font-size: 15px;
+      }
+      .hero-tags {
+        justify-content: center;
+      }
+      .section {
+        padding: 60px 20px;
+      }
+      .section-title {
+        font-size: 24px;
+      }
+      .nav-links {
+        gap: 12px;
+      }
+      .nav-links a {
+        font-size: 13px;
+      }
+      .vision-box {
+        padding: 30px 20px;
+      }
+      .vision-main-quote {
+        font-size: 18px;
+      }
+      .timeline {
+        padding-left: 22px;
+      }
+      .timeline-item::before {
+        left: -29px;
+      }
+      .contact-box {
+        padding: 36px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 스크롤 진행 바 -->
+  <div id="scroll-progress"></div>
+
+  <!-- 상단 내비게이션 바 -->
+  <header>
+    <div class="nav-container">
+      <a href="#" class="nav-logo">
+        <img src="profile_2d.png" alt="송수정" class="nav-logo-thumb">
+        송수정 <span>청년 창업가</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#about">소개</a></li>
+        <li><a href="#vision">창업 철학</a></li>
+        <li><a href="#strengths">핵심 강점</a></li>
+        <li><a href="#experience">활동 이력</a></li>
+        <li><a href="#interview">인터뷰</a></li>
+        <li><a href="#contact">소통</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- 1. 메인 히어로 섹션 (3D 틸트 인터랙션 포함) -->
+  <section class="hero" id="about">
+    <div class="hero-container hero-grid">
+
+      <!-- 큼직한 사각형 프로필 이미지 (마우스 움직임에 반응하는 3D 틸트) -->
+      <div class="hero-image-box" id="hero-tilt-card" title="마우스를 움직여보세요!">
+        <img src="profile_2d.png" alt="청년 창업가 송수정" class="hero-profile-img" id="tilt-img">
+        <div class="hero-image-badge">
+          <span>✨ Youth Founder</span>
+        </div>
+      </div>
+
+      <!-- 소개 텍스트 영역 -->
+      <div class="hero-text-box">
+        <div class="hero-badge">
+          🌱 새로운 가능성을 향한 도전
+        </div>
+        <h1 class="hero-title">
+          망설임 없는 <span class="highlight">과감한 실행력</span>으로,<br>
+          새로운 내일을 만들어갑니다
+        </h1>
+        <p class="hero-desc">
+          머릿속의 아이디어를 주저 없이 과감한 행동력으로 실현해 냅니다.<br>
+          팀원들과 열린 마음으로 소통하고 귀 기울이며, 함께 성장하는 건강한 시너지를 이끌어냅니다.
+        </p>
+        <div class="hero-tags">
+          <span class="hero-tag">#과감한실행력</span>
+          <span class="hero-tag">#원활한소통</span>
+          <span class="hero-tag">#도전과성장</span>
+          <span class="hero-tag">#긍정시너지</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 2. 창업 비전 & 철학 섹션 (스크롤 리빌 적용) -->
+  <section class="section reveal" id="vision">
+    <div class="section-header">
+      <p class="section-subtitle">Mission & Vision</p>
+      <h2 class="section-title">창업가로서의 지향점</h2>
+    </div>
+
+    <div class="vision-box">
+      <p class="vision-main-quote">
+        "작은 발견에서 시작해, 과감한 실행과 사람 중심의 연결로<br>더 나은 가치를 세상에 전달합니다."
+      </p>
+      <div class="vision-cards">
+        <div class="vision-card">
+          <div class="num">01. 관찰과 발견</div>
+          <h4>문제 정의</h4>
+          <p>일상 속 작은 불편함도 가볍게 지나치지 않고 본질적인 원인을 고민합니다.</p>
+        </div>
+        <div class="vision-card">
+          <div class="num">02. 행동과 검증</div>
+          <h4>빠른 실행력</h4>
+          <p>생각에만 머물지 않고 즉시 시도하며 현장에서 답을 찾고 개선합니다.</p>
+        </div>
+        <div class="vision-card">
+          <div class="num">03. 신뢰와 연대</div>
+          <h4>사람 중심</h4>
+          <p>진정성 있는 소통을 통해 동료, 고객, 지역 사회와 함께 성장합니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. 핵심 강점 섹션 (스크롤 리빌 적용) -->
+  <section class="section reveal" id="strengths" style="padding-top: 20px;">
+    <div class="section-header">
+      <p class="section-subtitle">Core Strengths</p>
+      <h2 class="section-title">나를 움직이게 하는 힘</h2>
+    </div>
+
+    <div class="strengths-grid">
+      <!-- 강점 1 -->
+      <div class="strength-card">
+        <div class="strength-icon icon-blue">⚡</div>
+        <h3>빠른 실행력과 추진력</h3>
+        <p>
+          생각에만 머물지 않고 바로 행동으로 옮기며, 부딪히고 배우며 결과를 만들어내는 추진력을 지녔습니다.
+        </p>
+      </div>
+
+      <!-- 강점 2 -->
+      <div class="strength-card">
+        <div class="strength-icon icon-coral">💬</div>
+        <h3>경청과 열린 소통</h3>
+        <p>
+          동료와 고객의 목소리에 진심으로 귀 기울이며, 서로 다른 생각을 하나로 잇는 유연한 커뮤니케이션을 지향합니다.
+        </p>
+      </div>
+
+      <!-- 강점 3 -->
+      <div class="strength-card">
+        <div class="strength-icon icon-amber">🚀</div>
+        <h3>도전과 함께하는 성장</h3>
+        <p>
+          어려운 문제 앞에서도 긍정적인 에너지를 잃지 않고, 함께하는 사람들과 같이 성장하는 시너지를 만듭니다.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. 활동 및 이력 섹션 (스크롤 리빌 적용) -->
+  <section class="section reveal" id="experience">
+    <div class="section-header">
+      <p class="section-subtitle">Experience & Journey</p>
+      <h2 class="section-title">활동 및 프로젝트 이력</h2>
+    </div>
+
+    <div class="timeline">
+
+      <!-- 이력 항목 1 (현재) -->
+      <div class="timeline-item">
+        <div class="timeline-period">현재 활동 중</div>
+        <h3 class="timeline-title">광명시 청년위원회 활동</h3>
+        <p class="timeline-desc">
+          청년들의 목소리에 귀 기울이며, 지역 청년 정책과 건강한 청년 문화를 만드는 데 기여하고 있습니다.
+        </p>
+        <div class="timeline-badges">
+          <span class="badge-chip">#지역거버넌스</span>
+          <span class="badge-chip">#청년정책제안</span>
+          <span class="badge-chip">#소통네트워크</span>
+        </div>
+      </div>
+
+      <!-- 이력 항목 2 (2021) -->
+      <div class="timeline-item">
+        <div class="timeline-period">2021년</div>
+        <h3 class="timeline-title">광명시 청년창업지원사업 선정</h3>
+        <p class="timeline-desc">
+          아이디어의 사업성과 빠른 실행력을 인정받아 광명시 청년창업지원사업에 최종 선정되었습니다.
+        </p>
+        <div class="timeline-badges">
+          <span class="badge-chip">#사업기획</span>
+          <span class="badge-chip">#비즈니스모델</span>
+          <span class="badge-chip">#정부지원선정</span>
+        </div>
+      </div>
+
+      <!-- 이력 항목 3 (2019) -->
+      <div class="timeline-item">
+        <div class="timeline-period">2019년</div>
+        <h3 class="timeline-title">이베이 수출스타 수상</h3>
+        <p class="timeline-desc">
+          글로벌 커머스를 향한 열정과 과감한 도전 정신을 바탕으로 이베이 수출스타에서 뜻깊은 성과를 거두었습니다.
+        </p>
+        <div class="timeline-badges">
+          <span class="badge-chip">#글로벌이커머스</span>
+          <span class="badge-chip">#시장분석</span>
+          <span class="badge-chip">#도전과실행</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 5. 미니 인터뷰 Q&A 코너 (클릭해서 여닫는 아코디언 인터랙션) -->
+  <section class="section reveal" id="interview">
+    <div class="section-header">
+      <p class="section-subtitle">Q&A Interview</p>
+      <h2 class="section-title">송수정에게 묻다</h2>
+      <p style="font-size: 13.5px; color: #94a3b8; margin-top: 6px;">궁금한 질문을 클릭해 답변을 열어보세요 👇</p>
+    </div>
+
+    <div class="interview-list">
+      <!-- Q1 (기본 열림) -->
+      <div class="interview-card open">
+        <div class="interview-header">
+          <div class="interview-q">
+            <span class="badge-q">Q1</span>
+            <span>창업가로서 가장 중요하게 여기는 원칙은 무엇인가요?</span>
+          </div>
+          <span class="interview-arrow">▼</span>
+        </div>
+        <div class="interview-body">
+          <p class="interview-a">
+            "완벽한 계획을 세우느라 타이밍을 놓치기보다, 빠르게 실행하고 현장에서 피드백을 받으며 다듬어가는 추진력입니다. 그리고 그 과정에서 팀원들과 솔직하게 소통하는 것을 가장 소중하게 여깁니다."
+          </p>
+        </div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="interview-card">
+        <div class="interview-header">
+          <div class="interview-q">
+            <span class="badge-q">Q2</span>
+            <span>함께 일할 때 가장 중요하게 생각하는 것은?</span>
+          </div>
+          <span class="interview-arrow">▼</span>
+        </div>
+        <div class="interview-body">
+          <p class="interview-a">
+            "경청과 상호 신뢰입니다. 서로 다른 관점을 가졌더라도 열린 마음으로 대화하면 언제나 더 좋은 해결책이 나온다고 믿습니다. 혼자만의 속도보다 팀의 건강한 호흡을 맞춥니다."
+          </p>
+        </div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="interview-card">
+        <div class="interview-header">
+          <div class="interview-q">
+            <span class="badge-q">Q3</span>
+            <span>앞으로 어떤 미래를 만들어가고 싶으신가요?</span>
+          </div>
+          <span class="interview-arrow">▼</span>
+        </div>
+        <div class="interview-body">
+          <p class="interview-a">
+            "청년의 진정성과 행동하는 용기로 주변에 긍정적인 파동을 일으키고, 사람들의 일상에 실질적인 도움과 가치를 선물하는 단단한 브랜드를 만들어가고 싶습니다."
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 응원하기 버튼 인터랙션 -->
+    <div class="cheer-section">
+      <button class="cheer-btn" id="cheer-button">
+        💖 송수정 님의 도전 응원하기
+        <span class="cheer-counter" id="cheer-count">128</span>
+      </button>
+      <p style="font-size: 12.5px; color: #94a3b8; margin-top: 8px;">버튼을 누르면 하트가 퐁퐁 터져요!</p>
+    </div>
+  </section>
+
+  <!-- 6. 열린 소통 및 원클릭 복사 코너 -->
+  <section class="section reveal" id="contact" style="padding-bottom: 90px;">
+    <div class="contact-box">
+      <h2 class="contact-title">언제나 열려있는 대화 창구 ☕</h2>
+      <p class="contact-desc">
+        새로운 아이디어, 청년 창업, 협업 및 커피챗 등 편안한 대화는 언제든 환영합니다.
+      </p>
+      <!-- 클릭 시 이메일 복사 인터랙션 -->
+      <div class="contact-email-card" id="copy-email-btn" title="클릭하면 이메일 주소가 복사됩니다">
+        ✉️ <span id="email-text">contact@example.com</span>
+        <span class="copy-badge">클릭해서 복사</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 토스트 알림 메시지 -->
+  <div id="toast-msg">✨ 이메일 주소가 클립보드에 복사되었습니다!</div>
+
+  <!-- 맨 위로 가기 버튼 -->
+  <button id="back-to-top" title="맨 위로 이동">↑</button>
+
+  <!-- 푸터 -->
+  <footer>
+    <p>© 송수정. All rights reserved.</p>
+  </footer>
+
+  <!-- 인터랙티브 스크립트 -->
+  <script>
+    // 1. 스크롤 진행 게이지바 & 맨 위로 가기 버튼
+    const progressBar = document.getElementById('scroll-progress');
+    const backToTopBtn = document.getElementById('back-to-top');
+
+    window.addEventListener('scroll', () => {
+      const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      progressBar.style.width = scrolled + '%';
+
+      if (winScroll > 300) {
+        backToTopBtn.classList.add('show');
+      } else {
+        backToTopBtn.classList.remove('show');
+      }
+    });
+
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // 2. 스크롤 시 부드럽게 나타나는 리빌 애니메이션 (Intersection Observer)
+    const reveals = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, { threshold: 0.12 });
+
+    reveals.forEach(el => revealObserver.observe(el));
+
+    // 3. 메인 프로필 사진 3D 틸트 (마우스 움직임에 반응)
+    const tiltCard = document.getElementById('hero-tilt-card');
+    const tiltImg = document.getElementById('tilt-img');
+
+    if (tiltCard && tiltImg) {
+      tiltCard.addEventListener('mousemove', (e) => {
+        const rect = tiltCard.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const rotateX = ((y - centerY) / centerY) * -12;
+        const rotateY = ((x - centerX) / centerX) * 12;
+
+        tiltImg.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.03, 1.03, 1.03)`;
+      });
+
+      tiltCard.addEventListener('mouseleave', () => {
+        tiltImg.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+      });
+    }
+
+    // 4. Q&A 아코디언 클릭 열고 닫기
+    const interviewCards = document.querySelectorAll('.interview-card');
+    interviewCards.forEach(card => {
+      card.addEventListener('click', () => {
+        card.classList.toggle('open');
+      });
+    });
+
+    // 5. 응원하기 하트 폭죽 인터랙션
+    const cheerBtn = document.getElementById('cheer-button');
+    const cheerCount = document.getElementById('cheer-count');
+    let count = 128;
+
+    cheerBtn.addEventListener('click', (e) => {
+      count++;
+      cheerCount.textContent = count;
+
+      // 하트 파티클 생성
+      for (let i = 0; i < 6; i++) {
+        createHeart(e.clientX, e.clientY);
+      }
+    });
+
+    function createHeart(x, y) {
+      const heart = document.createElement('div');
+      heart.className = 'floating-heart';
+      const hearts = ['💖', '✨', '🎉', '🌟', '💗', '🔥'];
+      heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+
+      const dx = (Math.random() - 0.5) * 120 + 'px';
+      const rot = (Math.random() - 0.5) * 60 + 'deg';
+      heart.style.setProperty('--dx', dx);
+      heart.style.setProperty('--rot', rot);
+      heart.style.left = (x - 12 + (Math.random() - 0.5) * 40) + 'px';
+      heart.style.top = (y - 12 + window.scrollY) + 'px';
+      heart.style.position = 'absolute';
+
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 1200);
+    }
+
+    // 6. 원클릭 이메일 복사 & 토스트 알림
+    const copyBtn = document.getElementById('copy-email-btn');
+    const emailText = document.getElementById('email-text').textContent;
+    const toast = document.getElementById('toast-msg');
+
+    copyBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText(emailText).then(() => {
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2400);
+      }).catch(() => {
+        // 복사 실패 시 fallback
+        window.location.href = 'mailto:' + emailText;
+      });
+    });
+  </script>
+
+</body>
+</html>
